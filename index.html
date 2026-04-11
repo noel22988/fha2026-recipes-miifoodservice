@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe Cards — Mii FoodService × Chef Leon Lim | FHA Expo 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --cream: #faf7f2;
+    --warm-white: #fffef9;
+    --text: #2c2c2c;
+    --muted: #7a7060;
+    --rule: #d4c9b0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #e8e4dc;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+  }
+
+  /* Print layout: 2 cards per A4 page */
+  @media print {
+    body { background: white; }
+    .cover { display: none; }
+    .grid { display: block; padding: 0; }
+    .card {
+      width: 190mm;
+      min-height: 130mm;
+      margin: 5mm auto;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      box-shadow: none !important;
+    }
+    .card:nth-child(2n) { page-break-after: always; }
+    @page { size: A4; margin: 10mm; }
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(201,168,76,0.08) 0%, transparent 50%);
+  }
+
+  .cover-ornament {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+
+  .cover-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .cover-chef {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+
+  .cover-event {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 32px;
+  }
+
+  .cover-brand {
+    margin-top: 48px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .cover-print-btn {
+    margin-top: 40px;
+    padding: 14px 36px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .cover-print-btn:hover { background: var(--gold); color: var(--navy); }
+
+  /* ── GRID ── */
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    gap: 40px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--warm-white);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+  }
+
+  .card-header {
+    background: var(--navy);
+    padding: 28px 32px 24px;
+    position: relative;
+  }
+
+  .card-course {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--warm-white);
+    line-height: 1.25;
+  }
+
+  .card-appliance {
+    margin-top: 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .card-body {
+    padding: 28px 32px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Ingredients two-column */
+  .ingredients {
+    columns: 2;
+    column-gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .ingredient {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-bottom: 7px;
+    break-inside: avoid;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .ingredient-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .ingredient-amount {
+    font-weight: 500;
+    color: var(--navy);
+    flex-shrink: 0;
+    min-width: 36px;
+  }
+
+  .ingredient-name {
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Steps */
+  .steps { margin-bottom: 20px; }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    background: var(--navy);
+    color: var(--warm-white);
+    font-size: 9px;
+    font-weight: 500;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-text {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--text);
+    font-weight: 300;
+  }
+
+  .card-footer {
+    margin: 0 32px 28px;
+    padding: 12px 16px;
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+  }
+
+  .tip-label {
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .tip-text {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .card-watermark {
+    text-align: right;
+    padding: 0 32px 20px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--rule);
+    text-transform: uppercase;
+  }
+
+  /* ── PAGE HEADING ── */
+  .page-heading {
+    text-align: center;
+    padding: 20px 0 0;
+  }
+  .page-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .page-heading p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 16px auto 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-ornament"></div>
+  <div class="cover-subtitle">FHA Expo 2026 · Singapore Expo</div>
+  <h1 class="cover-title">Recipe Cards</h1>
+  <div class="cover-chef">Chef Leon Lim</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;">MasterChef Singapore Season 2 · 1st Runner-up</div>
+  <div class="cover-event">22 – 25 October 2026 · 11.30am – 2.30pm</div>
+  <div class="cover-brand">Mii FoodService Pte Ltd</div>
+  <button class="cover-print-btn" onclick="window.print()">Print All Cards</button>
+</div>
+
+<!-- CARDS -->
+<div class="grid">
+
+  <div style="grid-column: 1/-1;" class="page-heading">
+    <h2>Today's Menu</h2>
+    <p>Live Culinary Demonstrations · FHA Expo 2026</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- CARD 1: Orange Vinaigrette Salad -->
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="card-course">Appetiser</div>
+      <div class="card-title">Orange Vinaigrette with<br>Sliced Chicken Salad</div>
+      <div class="card-appliance">Hallde Vegetable Preparation Machine</div>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Ingredients</div>
+      <div class="ingredients">
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">2</span><span class="ingredient-name">oranges, juiced</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">60ml</span><span class="ingredient-name">extra virgin olive oil</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">1 tbsp</span><span class="ingredient-name">Dijon mustard</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">1 tbsp</span><span class="ingredient-name">honey</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">1 clove</span><span class="ingredient-name">garlic, minced</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">salt &amp; white pepper</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">300g</span><span class="ingredient-name">chicken breast, cajun-rubbed &amp; baked, chilled</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">2 cups</span><span class="ingredient-name">mixed salad greens</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">½</span><span class="ingredient-name">cucumber, diced</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">cherry tomatoes, halved</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">canned mandarins, drained</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">toasted almond flakes</span></div>
+      </div>
+      <div class="section-label">Method</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Combine orange juice, mustard, honey, garlic, salt and white pepper in a bottle. Seal and shake well to emulsify. Add olive oil and shake again until combined.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Use the Hallde machine to dice the cucumber uniformly.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Thinly slice the chilled cajun chicken breast using the Hallde slicer blade.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">Arrange greens, cucumber, cherry tomatoes and mandarin segments. Top with chicken slices, drizzle vinaigrette generously, and finish with toasted almonds. Optional: zest a little orange directly over the salad.</div></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="tip-label">Chef's Tip</div>
+      <div class="tip-text">The Hallde ensures every slice is identical — crucial for both plating consistency and even dressing absorption.</div>
+    </div>
+    <div class="card-watermark">Mii FoodService · FHA 2026</div>
+  </div>
+
+  <!-- CARD 2: Cashew Tofu Puree -->
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="card-course">Main Course</div>
+      <div class="card-title">Cashew Tofu Purée with<br>Crispy Shiitake &amp; Chilli Crisp Oil</div>
+      <div class="card-appliance">Vitamix Commercial Blender</div>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Ingredients</div>
+      <div class="ingredients">
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">200g</span><span class="ingredient-name">raw cashews, soaked</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">150g</span><span class="ingredient-name">silken tofu (1 block)</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">salt to taste</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">200g</span><span class="ingredient-name">shiitake mushrooms, sliced</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">1 tbsp</span><span class="ingredient-name">neutral oil</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">chilli crisp oil</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">salt &amp; black pepper</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">chives (optional)</span></div>
+      </div>
+      <div class="section-label">Method</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Blend soaked cashews and silken tofu in the Vitamix on high for 90 seconds until completely smooth and thick. Season generously with salt. Adjust consistency to taste — add a touch more tofu for a looser purée.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Slice shiitake mushrooms. Heat oil in a pan until hot, sear sliced mushrooms without moving for 3–4 min until golden and crispy. Season with salt and black pepper.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Spread purée generously in a shallow bowl. Top with crispy shiitake, spoon chilli crisp oil over, and finish with a crack of black pepper and chives if using.</div></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="tip-label">Chef's Tip</div>
+      <div class="tip-text">The Vitamix achieves a silkiness no standard blender can match — the friction heating also warms the purée perfectly for serving.</div>
+    </div>
+    <div class="card-watermark">Mii FoodService · FHA 2026</div>
+  </div>
+
+  <!-- CARD 3: Waffles + Lemon Cheesecake -->
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="card-course">Dessert</div>
+      <div class="card-title">Waffles with Lemon Cheesecake<br>Drizzle &amp; Fresh Fruits</div>
+      <div class="card-appliance">Vitamix Commercial Blender</div>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Ingredients</div>
+      <div class="ingredients">
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">250g</span><span class="ingredient-name">cream cheese, room temp</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">110g</span><span class="ingredient-name">caster sugar</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">1</span><span class="ingredient-name">lemon, juiced (zest reserved)</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">½ tsp</span><span class="ingredient-name">vanilla extract</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">4</span><span class="ingredient-name">ready-made waffles, warmed</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">strawberries, sliced</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">blueberries</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">mint, to garnish</span></div>
+      </div>
+      <div class="section-label">Method</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Blend cream cheese, sugar, lemon juice and vanilla in the Vitamix on medium until completely smooth and pourable. Do not over-blend.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Warm waffles. Drizzle or spoon the lemon cheesecake cream generously over each waffle.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Top with fresh strawberries, blueberries and a sprig of mint. Finish with a fine grating of lemon zest over the top. Serve immediately.</div></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="tip-label">Chef's Tip</div>
+      <div class="tip-text">Room temperature cream cheese is essential for a lump-free blend. The higher sugar ratio keeps the drizzle pourable and glossy.</div>
+    </div>
+    <div class="card-watermark">Mii FoodService · FHA 2026</div>
+  </div>
+
+  <!-- CARD 4: Mango Coconut Smoothie -->
+  <div class="card">
+    <div class="card-accent"></div>
+    <div class="card-header">
+      <div class="card-course">Beverage</div>
+      <div class="card-title">Mango Coconut Smoothie</div>
+      <div class="card-appliance">Vitamix Commercial Blender</div>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Ingredients</div>
+      <div class="ingredients">
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">300g</span><span class="ingredient-name">frozen mango chunks</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">150ml</span><span class="ingredient-name">coconut water</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">2 tbsp</span><span class="ingredient-name">honey, or to taste</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">pinch of sea salt</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">mint, to garnish (optional)</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">toasted coconut flakes (optional)</span></div>
+      </div>
+      <div class="section-label">Method</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Add coconut water, honey and a pinch of sea salt to the Vitamix first.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">Add frozen mango on top. Blend on high for 45–60 seconds until completely smooth and creamy. Taste and adjust sweetness with more honey.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">Pour into chilled glasses. Garnish with mint and/or coconut flakes if desired. Serve immediately.</div></div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="tip-label">Chef's Tip</div>
+      <div class="tip-text">Frozen mango replaces ice — never add ice cubes or the smoothie goes watery. Keep it simple: the mango and coconut water do all the work. Adjust honey to the ripeness of your mango batch.</div>
+    </div>
+    <div class="card-watermark">Mii FoodService · FHA 2026</div>
+  </div>
+
+</div>
+
+</body>
+</html>
