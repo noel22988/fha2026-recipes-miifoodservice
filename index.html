@@ -19,6 +19,11 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     background: #e8e4dc;
     font-family: 'DM Sans', sans-serif;
@@ -73,6 +78,7 @@
 
   /* ── COVER ── */
   .cover {
+    width: 100vw;
     min-height: 100vh;
     min-height: 100dvh;
     background: var(--navy);
@@ -84,6 +90,7 @@
     padding: 60px 40px;
     position: relative;
     overflow: hidden;
+    margin-left: calc(-50vw + 50%);
   }
 
   .cover::before {
@@ -388,7 +395,7 @@
         <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">2 cups</span><span class="ingredient-name">mixed salad greens</span></div>
         <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">½</span><span class="ingredient-name">cucumber, diced</span></div>
         <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">cherry tomatoes, halved</span></div>
-        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">canned mandarins, drained</span></div>
+        <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">mandarin segments, drained</span></div>
         <div class="ingredient"><div class="ingredient-dot"></div><span class="ingredient-amount">—</span><span class="ingredient-name">toasted almond flakes</span></div>
       </div>
       <div class="section-label">Method</div>
