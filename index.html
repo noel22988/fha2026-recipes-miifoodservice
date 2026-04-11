@@ -35,25 +35,47 @@
 
   /* Print layout */
   @media print {
-    html, body { width: 100%; overflow: visible; }
+    html, body { width: 100%; overflow: visible; background: white; }
     .print-bar { display: none !important; }
+
+    /* Cover — force full A4 page */
     .cover {
       width: 100% !important;
       margin-left: 0 !important;
-      height: 100vh;
-      min-height: unset;
+      min-height: unset !important;
+      height: 277mm; /* A4 height minus 10mm margins each side */
+      display: flex;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
       page-break-after: always;
       break-after: page;
     }
-    .page-heading { page-break-before: avoid; break-before: avoid; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; padding: 0; }
+
+    /* Today's Menu heading sits at top of page 2 */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      padding: 0;
+    }
+
+    .page-heading {
+      grid-column: 1 / -1;
+      page-break-before: avoid;
+      break-before: avoid;
+      padding: 0 0 8mm 0;
+    }
+
     .card {
       min-height: unset;
       page-break-inside: avoid;
       break-inside: avoid;
       box-shadow: none !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
-    @page { size: A4; margin: 10mm; }
+
+    @page { size: A4 portrait; margin: 10mm; }
   }
 
   .print-bar {
@@ -85,6 +107,8 @@
     min-height: 100vh;
     min-height: 100dvh;
     background: var(--navy);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
     display: flex;
     flex-direction: column;
     align-items: center;
