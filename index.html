@@ -51,23 +51,20 @@
       break-after: page;
     }
 
-    /* Today's Menu heading sits at top of page 2 */
     .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6mm;
+      display: block;
       padding: 0;
     }
 
-    .page-heading {
-      grid-column: 1 / -1;
-      page-break-before: avoid;
-      break-before: avoid;
-      padding: 0 0 8mm 0;
-    }
+    /* Today's Menu heading — hide in print */
+    .page-heading { display: none; }
 
+    /* Each card gets its own page */
     .card {
       min-height: unset;
+      width: 100%;
+      page-break-after: always;
+      break-after: page;
       page-break-inside: avoid;
       break-inside: avoid;
       box-shadow: none !important;
