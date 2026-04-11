@@ -21,7 +21,10 @@
 
   html, body {
     width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -30,26 +33,26 @@
     color: var(--text);
   }
 
-  /* Print layout: 2 cards per A4 page */
+  /* Print layout */
   @media print {
-    body { background: white; }
-    .print-bar { display: none; }
+    html, body { width: 100%; overflow: visible; }
+    .print-bar { display: none !important; }
     .cover {
-      min-height: 100vh;
+      width: 100% !important;
+      margin-left: 0 !important;
       height: 100vh;
+      min-height: unset;
       page-break-after: always;
-      break-after: always;
+      break-after: page;
     }
-    .grid { display: block; padding: 0; }
+    .page-heading { page-break-before: avoid; break-before: avoid; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; padding: 0; }
     .card {
-      width: 190mm;
-      min-height: 130mm;
-      margin: 5mm auto;
+      min-height: unset;
       page-break-inside: avoid;
       break-inside: avoid;
       box-shadow: none !important;
     }
-    .card:nth-child(2n) { page-break-after: always; }
     @page { size: A4; margin: 10mm; }
   }
 
@@ -78,7 +81,7 @@
 
   /* ── COVER ── */
   .cover {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     min-height: 100dvh;
     background: var(--navy);
@@ -90,7 +93,6 @@
     padding: 60px 40px;
     position: relative;
     overflow: hidden;
-    margin-left: calc(-50vw + 50%);
   }
 
   .cover::before {
@@ -158,7 +160,7 @@
     margin: 0 auto;
     padding: 60px 24px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
     gap: 40px;
   }
 
