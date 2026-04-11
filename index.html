@@ -28,8 +28,13 @@
   /* Print layout: 2 cards per A4 page */
   @media print {
     body { background: white; }
-    .cover { display: none; }
     .print-bar { display: none; }
+    .cover {
+      min-height: 100vh;
+      height: 100vh;
+      page-break-after: always;
+      break-after: always;
+    }
     .grid { display: block; padding: 0; }
     .card {
       width: 190mm;
@@ -69,6 +74,7 @@
   /* ── COVER ── */
   .cover {
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--navy);
     display: flex;
     flex-direction: column;
