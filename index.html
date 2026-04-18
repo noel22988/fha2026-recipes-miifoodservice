@@ -189,7 +189,6 @@
   }
   .header-product-row {
     display: flex; align-items: center; gap: 10px; margin-bottom: 7px;
-    flex-wrap: wrap;
   }
   .header-product-row:last-child { margin-bottom: 0; }
   .header-product-pip {
@@ -198,11 +197,21 @@
   }
   .header-product-name {
     font-size: 11px; color: rgba(255,255,255,0.6);
-    font-weight: 400; flex: 1; min-width: 160px;
+    font-weight: 400; flex: 1;
   }
   .header-product-name em {
     font-style: normal; font-size: 10px;
     color: rgba(255,255,255,0.28); margin-left: 5px;
+  }
+  @media (max-width: 480px) {
+    .header-product-name em {
+      display: block;
+      margin-left: 0;
+      margin-top: 2px;
+    }
+    .header-product-name em::before {
+      content: none;
+    }
   }
   .header-product-btn {
     font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -212,11 +221,6 @@
     transition: all 0.2s; flex-shrink: 0;
   }
   .header-product-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
-  @media (max-width: 480px) {
-    .header-product-pip { display: none; }
-    .header-product-name { width: 100%; flex: unset; }
-    .header-product-btn { margin-left: 0; }
-  }
 
   .card-body { padding: 28px 32px; flex: 1; }
 
@@ -318,12 +322,12 @@
         <div class="header-products-label">Equipment used</div>
         <div class="header-product-row">
           <div class="header-product-pip"></div>
-          <div class="header-product-name">Zumex Versatile Star <em>— Fresh juice extraction</em></div>
+          <div class="header-product-name">Zumex Versatile Star <em>Fresh juice extraction</em></div>
           <a href="https://www.miifoodservice.com/brands/zumex/versatile-star/" target="_blank" class="header-product-btn">Learn more</a>
         </div>
         <div class="header-product-row">
           <div class="header-product-pip"></div>
-          <div class="header-product-name">Hallde RG-100 <em>— Vegetable prep &amp; slicing</em></div>
+          <div class="header-product-name">Hallde RG-100 <em>Vegetable prep &amp; slicing</em></div>
           <a href="https://www.miifoodservice.com/brands/hallde/vegetable-preparation-machines/rg-100/" target="_blank" class="header-product-btn">Learn more</a>
         </div>
       </div>
@@ -356,6 +360,8 @@
       <div class="tip-label">Chef's Tip</div>
       <div class="tip-text">The Hallde RG-100 gives you perfectly uniform cuts every time — essential for even dressing absorption and consistent plating across every serving.</div>
     </div>
+  </div>
+
   <!-- ─── CARD 2: Cashew Tofu Purée ─── -->
   <div class="card">
     <div class="card-accent"></div>
@@ -366,7 +372,7 @@
         <div class="header-products-label">Equipment used</div>
         <div class="header-product-row">
           <div class="header-product-pip"></div>
-          <div class="header-product-name">Vitamix Vita-Prep 3 <em>— High-performance commercial blending</em></div>
+          <div class="header-product-name">Vitamix Vita-Prep 3 <em>High-performance commercial blending</em></div>
           <a href="https://www.miifoodservice.com/brands/vitamix/vita-prep-3/" target="_blank" class="header-product-btn">Learn more</a>
         </div>
       </div>
@@ -394,6 +400,8 @@
       <div class="tip-label">Chef's Tip</div>
       <div class="tip-text">The Vita-Prep 3's high-torque motor achieves a silkiness no standard blender can match — the friction heat also warms the purée perfectly for immediate plating.</div>
     </div>
+  </div>
+
   <!-- ─── CARD 3: Waffles + Lemon Cheesecake Drizzle ─── -->
   <div class="card">
     <div class="card-accent"></div>
@@ -404,7 +412,7 @@
         <div class="header-products-label">Equipment used</div>
         <div class="header-product-row">
           <div class="header-product-pip"></div>
-          <div class="header-product-name">Vitamix Vita-Prep 3 <em>— High-performance commercial blending</em></div>
+          <div class="header-product-name">Vitamix Vita-Prep 3 <em>High-performance commercial blending</em></div>
           <a href="https://www.miifoodservice.com/brands/vitamix/vita-prep-3/" target="_blank" class="header-product-btn">Learn more</a>
         </div>
       </div>
@@ -432,6 +440,8 @@
       <div class="tip-label">Chef's Tip</div>
       <div class="tip-text">Room temperature cream cheese is essential for a lump-free blend. The Vita-Prep 3's variable speed gives you precise control — stop as soon as it's smooth to keep the drizzle pourable and glossy.</div>
     </div>
+  </div>
+
   <!-- ─── CARD 4: Mango Coconut Smoothie ─── -->
   <div class="card">
     <div class="card-accent"></div>
@@ -442,7 +452,7 @@
         <div class="header-products-label">Equipment used</div>
         <div class="header-product-row">
           <div class="header-product-pip"></div>
-          <div class="header-product-name">Vitamix The Quiet One <em>— Front-of-house bar blender</em></div>
+          <div class="header-product-name">Vitamix The Quiet One <em>Front-of-house bar blender</em></div>
           <a href="https://www.miifoodservice.com/brands/vitamix/the-quiet-one/" target="_blank" class="header-product-btn">Learn more</a>
         </div>
       </div>
@@ -468,15 +478,6 @@
       <div class="tip-label">Chef's Tip</div>
       <div class="tip-text">The Quiet One is built for front-of-house use — powerful enough for frozen fruit, quiet enough for a demo floor. Frozen mango replaces ice so the smoothie stays thick and never watery.</div>
     </div>
-    <div class="product-links">
-      <div class="product-links-label">Equipment used in this recipe</div>
-      <div class="product-link-row">
-        <div class="product-link-pip"></div>
-        <div class="product-link-name">Vitamix The Quiet One<em>Front-of-house bar blender</em></div>
-        <a href="https://www.miifoodservice.com/brands/vitamix/the-quiet-one/" target="_blank" class="product-link-btn">Learn more</a>
-      </div>
-    </div>
-    <div class="card-watermark">Mii FoodService &nbsp;·&nbsp; FHA Horeca 2026</div>
   </div>
 
 </div>
