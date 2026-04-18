@@ -71,18 +71,30 @@
 
   /* Mii branding — prominent at top */
   .cover-mii-logo {
-    font-size: clamp(18px, 3vw, 26px);
+    font-size: clamp(14px, 3vw, 26px);
     font-weight: 600;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--gold);
     margin-bottom: 6px;
+    white-space: nowrap;
   }
   .cover-mii-url {
     font-size: 11px;
     color: rgba(255,255,255,0.4);
     letter-spacing: 2px;
     margin-bottom: 44px;
+  }
+  .cover-mii-url a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cover-mii-url a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
   }
 
   .cover-ornament {
@@ -177,6 +189,7 @@
   }
   .header-product-row {
     display: flex; align-items: center; gap: 10px; margin-bottom: 7px;
+    flex-wrap: wrap;
   }
   .header-product-row:last-child { margin-bottom: 0; }
   .header-product-pip {
@@ -185,7 +198,7 @@
   }
   .header-product-name {
     font-size: 11px; color: rgba(255,255,255,0.6);
-    font-weight: 400; flex: 1;
+    font-weight: 400; flex: 1; min-width: 160px;
   }
   .header-product-name em {
     font-style: normal; font-size: 10px;
@@ -199,6 +212,11 @@
     transition: all 0.2s; flex-shrink: 0;
   }
   .header-product-btn:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+  @media (max-width: 480px) {
+    .header-product-pip { display: none; }
+    .header-product-name { width: 100%; flex: unset; }
+    .header-product-btn { margin-left: 0; }
+  }
 
   .card-body { padding: 28px 32px; flex: 1; }
 
@@ -271,7 +289,7 @@
 <!-- ═══════════════════ COVER ═══════════════════ -->
 <div class="cover">
   <div class="cover-mii-logo">Mii FoodService Pte Ltd</div>
-  <div class="cover-mii-url">miifoodservice.com</div>
+  <div class="cover-mii-url"><a href="https://www.miifoodservice.com" target="_blank">miifoodservice.com</a></div>
   <div class="cover-ornament"></div>
   <div class="cover-eyebrow">Live Culinary Demonstration</div>
   <h1 class="cover-title">Recipe Cards</h1>
